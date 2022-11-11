@@ -21,8 +21,9 @@ public class UserRepository implements IUserRepository {
     @Override
     public UserModel CreateUser(String id, String names, String lastname, String email, int age, String password, String gender) {
         UserModel user = new UserModel();
+        UUID uuid = UUID.fromString(id);
         String sqlQueryCreateUser = "INSERT INTO auth.users (id, names, lastname, email, age, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        int rows = jdbcTemplate.update(sqlQueryCreateUser, id, names, lastname, email, age, password, gender);
+        int rows = jdbcTemplate.update(sqlQueryCreateUser, uuid, names, lastname, email, age, password, gender);
 
         if (rows <= 0) {
             log.error("No se pudo crear el usuario");
